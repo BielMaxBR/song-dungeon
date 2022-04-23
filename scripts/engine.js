@@ -42,7 +42,14 @@ export default class Engine {
         this.ctx.font = `normal ${this.fontSize}px monospace`
         for (let y = 0; y < this.size.height; y++) {
             for (let x = 0; x < this.size.width; x++) {
-                const char = this.map[[x,y]]?.char || "_"//(y%2 == 0)-x%2 == 0 ? "." : "@"
+                const tile = this.map[[x,y]]
+                const char = tile?.char || "╬"
+
+                // background
+                this.ctx.fillStyle = tile?.bgcolor || "black"
+                this.ctx.fillText("█", (this.fontSize/4)+(this.fontSize/1.818*x), (this.fontSize)*(y+1))
+                // char
+                this.ctx.fillStyle = tile?.color || "white"
                 this.ctx.fillText(char, (this.fontSize/4)+(this.fontSize/1.818*x), (this.fontSize)*(y+1))
             }
             
