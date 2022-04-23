@@ -1,13 +1,13 @@
 export default class Engine {
     constructor(config) {
         this.canvas = config?.canvas || null
-        this.size = config?.size || {width: 50, height: 50}
-        
+        this.size = config?.size || { width: 50, height: 50 }
+
         this.ctx = null
     }
 
     init() {
-        
+
         console.log('iniciando setup')
         this.createCanvas()
         console.log('setup pronto')
@@ -17,24 +17,23 @@ export default class Engine {
 
     createCanvas() {
         let canvas = this.canvas
-        
+
         if (canvas == null) {
             console.log('criando canvas')
-        
+
             canvas = document.createElement('canvas')
             this.canvas = canvas
             canvas.id = 'canvas'
             document.body.appendChild(canvas)
         }
-
-        canvas.width = this.size.width
-        canvas.height = this.size.height
         this.ctx = canvas.getContext("2d")
     }
 
     render() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.font = "bold 70px courier mono"
         this.ctx.fillStyle = "white"
-        this.ctx.fillRect(10,10,1,1)
+        this.ctx.fillText("#", 0, this.canvas.height)
     }
 
     initLoop() {
@@ -46,7 +45,7 @@ export default class Engine {
             let delta = performance.now() - UpdatelastUpdate
 
             // this.update(delta)
-    
+
             UpdatelastUpdate = performance.now()
             setTimeout(Updateloop, 1000 / 60)
         }

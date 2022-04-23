@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>song dungeon</title>
-    <link rel="icon" 
-        type="image/x-icon"
-        href="./favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <style>
-        * { margin: 0; padding: 0;}
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
-        body, html { 
-            height:100%;
-            
+        body,
+        html {
+            height: 100%;
+
             display: flex;
             justify-content: center;
         }
 
         #canvas {
-            position:absolute;
-            height:100%;
+            position: absolute;
+            height: 100%;
             margin-left: auto;
             margin-right: auto;
             background-color: black;
-            image-rendering: pixelated; 
+            image-rendering: pixelated;
+            -webkit-font-smoothing: none;
         }
     </style>
 </head>
+
 <body>
-    <canvas id="canvas" width="50" height="50"></canvas>
+    <canvas id="canvas" width="500" height="500"></canvas>
     <script src="./scripts/index.js" type="module"></script>
 </body>
+
 </html>
