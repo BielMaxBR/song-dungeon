@@ -1,3 +1,5 @@
+import Manager from "./mapManager.js"
+
 export default class Engine {
     constructor(config) {
         this.canvas = config?.canvas || null
@@ -7,6 +9,7 @@ export default class Engine {
 
         this.map = []
 
+        this.manager = new Manager(this.map)
     }
     
     init() {
