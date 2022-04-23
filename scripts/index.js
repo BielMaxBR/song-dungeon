@@ -2,8 +2,8 @@ import Engine from "./engine.js"
 
 const engine = new Engine({
     size: {
-        width: 50,
-        height: 50
+        width: 25,
+        height: 25
     },
     canvas: document.getElementById('canvas')
 })
