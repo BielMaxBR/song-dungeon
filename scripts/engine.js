@@ -43,7 +43,7 @@ export default class Engine {
         for (let y = 1; y < this.size.height+1; y++) {
             let row = ""
             for (let x = 1; x < this.size.width+1; x++) {
-                row += (y%2 == 0)-x%2 == 0 ? "#" : "█"
+                row += (y%2 == 0)-x%4 == 0 ? "█" : "#"
             }
             this.ctx.fillText(row, this.fontSize/4, (this.fontSize)*y)
             
