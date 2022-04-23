@@ -6,8 +6,9 @@ export default class Engine {
         this.ctx = null
 
         this.map = []
-    }
 
+    }
+    
     init() {
 
         console.log('iniciando setup')
@@ -30,15 +31,23 @@ export default class Engine {
         }
         canvas.height = window.innerHeight
         canvas.width = canvas.height
+        this.fontSize = Math.floor(this.canvas.height / this.size.height)
         this.ctx = canvas.getContext("2d")
     }
-
+    
     render() {
         // inserir o https://github.com/fionnfuchs/ascii-canvas-js
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-        this.ctx.font = `${this.canvas.height / this.size.height}px bold Courier Mono`
         this.ctx.fillStyle = "white"
-        this.ctx.fillText("##############", 0, this.canvas.height)
+        this.ctx.font = `normal ${this.fontSize}px monospace`
+        for (let y = 1; y < this.size.height+1; y++) {
+            let row = ""
+            for (let x = 1; x < this.size.width+1; x++) {
+                row += (y%2 == 0)-x%2 == 0 ? "#" : "█"
+            }
+            this.ctx.fillText(row, this.fontSize/4, (this.fontSize)*y)
+            
+        }
     }
 
     initLoop() {
