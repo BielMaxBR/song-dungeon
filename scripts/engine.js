@@ -11,7 +11,7 @@ export default class Engine {
 
         this.manager = new Manager(this.map)
     }
-    
+
     init() {
 
         console.log('iniciando setup')
@@ -37,7 +37,7 @@ export default class Engine {
         this.fontSize = Math.floor(this.canvas.height / this.size.height)
         this.ctx = canvas.getContext("2d")
     }
-    
+
     render() {
         // inserir o https://github.com/fionnfuchs/ascii-canvas-js
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -45,17 +45,17 @@ export default class Engine {
         this.ctx.font = `normal ${this.fontSize}px monospace`
         for (let y = 0; y < this.size.height; y++) {
             for (let x = 0; x < this.size.width; x++) {
-                const tile = this.map[[x,y]]
+                const tile = this.map[[x, y]]
                 const char = tile?.char || "╬"
 
                 // background
                 this.ctx.fillStyle = tile?.bgcolor || "black"
-                this.ctx.fillText("█", (this.fontSize/4)+(this.fontSize/1.818*x), (this.fontSize)*(y+1))
+                this.ctx.fillText("█", (this.fontSize / 4) + (this.fontSize / 1.818 * x), (this.fontSize) * (y + 1))
                 // char
                 this.ctx.fillStyle = tile?.color || "white"
-                this.ctx.fillText(char, (this.fontSize/4)+(this.fontSize/1.818*x), (this.fontSize)*(y+1))
+                this.ctx.fillText(char, (this.fontSize / 4) + (this.fontSize / 1.818 * x), (this.fontSize) * (y + 1))
             }
-            
+
         }
     }
 
