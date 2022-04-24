@@ -13,7 +13,7 @@ export default class Engine {
         this.children = []
 
         this.mapManager = new MapManager(this.map)
-        this.childrenManager = new childremManager(this.children)
+        this.childrenManager = new ChildrenManager(this.children)
 
         this.objects = objects
 
