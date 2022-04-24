@@ -3,17 +3,17 @@ export default class Manager {
         this.map = map
     }
 
-    add(char = String, x = Number, y = Number, color = String, bgcolor = String) {
+    add(char, x, y, color, bgcolor) {
         this.map[[x, y]] = { char: char[0], color, bgcolor }
     }
-    addRect(char = String, x = Number, y = Number, w = Number, h = Number, color = String, bgcolor = String) {
+    addRect(char, x, y, w, h, color, bgcolor) {
         for (var _x = 0; _x < w; _x++) {
             for (var _y = 0; _y < h; _y++) {
                 this.map[[x + _x, y + _y]] = { char: char[0], color, bgcolor };
             }
         }
     }
-    addStrokeRect(char = String, x = Number, y = Number, w = Number, h = Number, color = String, bgcolor = String) {
+    addStrokeRect(char, x, y, w, h, color, bgcolor) {
         for (var _x = 0; _x < w; _x++) {
             for (var _y = 0; _y < h; _y++) {
                 if (_x == 0 || _y == 0 || _x == w - 1 || _y == h - 1) {
@@ -22,9 +22,14 @@ export default class Manager {
             }
         }
     }
-    addHString(text = String, x = Number, y = Number, color = String, bgcolor = String) {
+    addHString(text, x, y, color, bgcolor) {
         for (var _x = 0; _x < text.length; _x++) {
             this.map[[x + _x, y]] = { char: text.charAt(_x), color, bgcolor };
+        }
+    }
+    addVString(text, x, y, color, bgcolor) {
+        for (var _y = 0; _y < text.length; _y++) {
+            this.map[[x , y + _y]] = { char: text.charAt(_y), color, bgcolor };
         }
     }
 }
