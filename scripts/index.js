@@ -1,4 +1,4 @@
-import Engine from "./engine.js"
+import Engine from "./classes/engine.js"
 
 const engine = new Engine({
     size: {

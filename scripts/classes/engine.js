@@ -1,4 +1,6 @@
-import Manager from "./mapManager.js"
+import MapManager from "./mapManager.js"
+import ChildrenManager from "./childrenManager.js"
+import {objects} from "./utils/objects.js"
 
 export default class Engine {
     constructor(config) {
@@ -8,8 +10,12 @@ export default class Engine {
         this.ctx = null
 
         this.map = []
+        this.children = []
 
-        this.manager = new Manager(this.map)
+        this.mapManager = new MapManager(this.map)
+        this.childrenManager = new childremManager(this.children)
+
+        this.objects = objects
 
         this.offset = config?.offset || { x: 4, y: -2 }
     }
@@ -54,10 +60,10 @@ export default class Engine {
                 const charY = ((this.size.height + 1) * (y + 1)) + this.offset.y
 
                 // background
-                this.ctx.fillStyle = tile?.bgcolor || `rgb(${10 * y},${10 * x},${10 * x})`
+                this.ctx.fillStyle = tile?.bgcolor || "black" // `rgb(${10 * y},${10 * x},${10 * x})`
                 this.ctx.fillText("█", charX, charY)
                 // char
-                this.ctx.fillStyle = tile?.color || `rgb(${12 * x},${12 * y},${12 * y})`
+                this.ctx.fillStyle = tile?.color || "white" // `rgb(${12 * x},${12 * y},${12 * y})`
                 this.ctx.fillText(char, charX, charY)
             }
 
