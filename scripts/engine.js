@@ -10,6 +10,8 @@ export default class Engine {
         this.map = []
 
         this.manager = new Manager(this.map)
+
+        this.offset = config?.offset || { x: 4, y: -2 }
     }
 
     init() {
@@ -42,18 +44,21 @@ export default class Engine {
         // inserir o https://github.com/fionnfuchs/ascii-canvas-js
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.fillStyle = "white"
-        this.ctx.font = `normal ${this.fontSize}px monospace`
+        this.ctx.font = `normal ${this.fontSize - 3}px monospace`
         for (let y = 0; y < this.size.height; y++) {
             for (let x = 0; x < this.size.width; x++) {
                 const tile = this.map[[x, y]]
                 const char = tile?.char || "╬"
 
+                const charX = (this.fontSize / 2 * x) + this.offset.x
+                const charY = ((this.size.height + 1) * (y + 1)) + this.offset.y
+
                 // background
-                this.ctx.fillStyle = tile?.bgcolor || "black"
-                this.ctx.fillText("█", (this.fontSize / 4) + (this.fontSize / 1.818 * x), (this.fontSize) * (y + 1))
+                this.ctx.fillStyle = tile?.bgcolor || `rgb(${10 * y},${10 * x},${10 * x})`
+                this.ctx.fillText("█", charX, charY)
                 // char
-                this.ctx.fillStyle = tile?.color || "white"
-                this.ctx.fillText(char, (this.fontSize / 4) + (this.fontSize / 1.818 * x), (this.fontSize) * (y + 1))
+                this.ctx.fillStyle = tile?.color || `rgb(${12 * x},${12 * y},${12 * y})`
+                this.ctx.fillText(char, charX, charY)
             }
 
         }
