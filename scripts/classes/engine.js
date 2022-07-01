@@ -37,7 +37,7 @@ export default class Engine {
                 line.setAttribute("id", "line")
 
                 for (let x = 0; x < this.size.width; x++) {
-                    const letter = document.createElement('p')
+                    const letter = document.createElement('a')
 
                     letter.setAttribute("id", "letter")
                     letter.innerText = y % 2 == 0 ? "a" : "A"
