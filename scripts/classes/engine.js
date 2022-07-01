@@ -40,6 +40,7 @@ export default class Engine {
                     const letter = document.createElement('a')
 
                     letter.setAttribute("id", "letter")
+                    letter.setAttribute("class", `x${x}y${y}`)
                     letter.innerText = y % 2 == 0 ? "a" : "A"
                     line.appendChild(letter)
                 }
@@ -50,23 +51,19 @@ export default class Engine {
     }
 
     render() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-        this.ctx.fillStyle = "white"
-        this.ctx.font = `normal ${this.fontSize - 3}px monospace`
         for (let y = 0; y < this.size.height; y++) {
             for (let x = 0; x < this.size.width; x++) {
                 const tile = this.map[[x, y]]
                 const char = tile?.char || "╬"
 
-                const charX = (this.fontSize / 2 * x) + this.offset.x
-                const charY = ((this.size.height + 1) * (y + 1)) + this.offset.y
+                const letter = document.getElementsByClassName(`x${x}y${y}`)[0]
+                if (!letter) continue
 
                 // background
-                this.ctx.fillStyle = tile?.bgcolor || "black" // `rgb(${10 * y},${10 * x},${10 * x})`
-                this.ctx.fillText("█", charX, charY)
+                letter.style.backgroundColor = tile?.bgcolor || "black" // `rgb(${10 * y},${10 * x},${10 * x})`
                 // char
-                this.ctx.fillStyle = tile?.color || "white" // `rgb(${12 * x},${12 * y},${12 * y})`
-                this.ctx.fillText(char, charX, charY)
+                letter.style.color = tile?.color || "white" // `rgb(${12 * x},${12 * y},${12 * y})`
+                letter.innerText = char
             }
 
         }
@@ -79,8 +76,7 @@ export default class Engine {
         const Drawloop = () => {
             let delta = performance.now() - DrawlastUpdate
 
-            // this.render(delta)
-            this.tests()
+            this.render(delta)
             DrawlastUpdate = performance.now()
 
             setTimeout(Drawloop, 1000 / 60)
