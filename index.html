@@ -16,26 +16,33 @@
         body,
         html {
             height: 100%;
-
-            display: flex;
-            justify-content: center;
             background-color: rgb(153, 153, 153);
         }
 
         #canvas {
-            position: absolute;
-            height: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: black;
-            image-rendering: pixelated;
-            -webkit-font-smoothing: none;
+            list-style: none;
+            line-break: auto;
+            font-family: monospace;
+            font-size: 3vmin;
+            user-select: none;
         }
+
+        #line {
+            display: flex;
+            justify-content: center;
+        }
+
+        #letter {
+            color: white;
+            background-color: black;
+        }
+
     </style>
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
+    <!-- <canvas id="canvas"></canvas> -->
+    <ul id="canvas"></ul>
     <script src="./scripts/index.js" type="module"></script>
 </body>
 

@@ -1,13 +1,11 @@
 import MapManager from "./mapManager.js"
 import ChildrenManager from "./childrenManager.js"
-import {objects} from "./utils/objects.js"
+import { objects } from "./utils/objects.js"
 
 export default class Engine {
     constructor(config) {
         this.canvas = config?.canvas || null
         this.size = config?.size || { width: 50, height: 50 }
-
-        this.ctx = null
 
         this.map = []
         this.children = []
@@ -16,8 +14,6 @@ export default class Engine {
         this.childrenManager = new ChildrenManager(this.children)
 
         this.objects = objects
-
-        this.offset = config?.offset || { x: 4, y: -2 }
     }
 
     init() {
@@ -32,22 +28,28 @@ export default class Engine {
     createCanvas() {
         let canvas = this.canvas
 
-        if (canvas == null) {
+        if (canvas != null) {
             console.log('criando canvas')
+            canvas.innerHTML = ''
 
-            canvas = document.createElement('canvas')
-            this.canvas = canvas
-            canvas.id = 'canvas'
-            document.body.appendChild(canvas)
+            for (let y = 0; y < this.size.height; y++) {
+                let line = document.createElement('li')
+                line.setAttribute("id", "line")
+
+                for (let x = 0; x < this.size.width; x++) {
+                    const letter = document.createElement('p')
+
+                    letter.setAttribute("id", "letter")
+                    letter.innerText = y % 2 == 0 ? "a" : "A"
+                    line.appendChild(letter)
+                }
+                canvas.appendChild(line)
+
+            }
         }
-        canvas.height = window.innerHeight
-        canvas.width = canvas.height
-        this.fontSize = Math.floor(this.canvas.height / this.size.height)
-        this.ctx = canvas.getContext("2d")
     }
 
     render() {
-        // inserir o https://github.com/fionnfuchs/ascii-canvas-js
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.fillStyle = "white"
         this.ctx.font = `normal ${this.fontSize - 3}px monospace`
@@ -77,8 +79,8 @@ export default class Engine {
         const Drawloop = () => {
             let delta = performance.now() - DrawlastUpdate
 
-            this.render(delta)
-
+            // this.render(delta)
+            this.tests()
             DrawlastUpdate = performance.now()
 
             setTimeout(Drawloop, 1000 / 60)

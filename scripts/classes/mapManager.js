@@ -2,7 +2,7 @@ export default class MapManager {
     constructor(map) {
         this.map = map
     }
-
+    // código roubado roubado >:)
     add(char, x, y, color, bgcolor) {
         if (typeof (x) != "number" || typeof (y) != "number") return "error"
         this.map[[x, y]] = { char: char[0], color, bgcolor }
