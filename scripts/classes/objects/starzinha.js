@@ -4,7 +4,7 @@ export default class Starzinha extends GameObject {
         super(position)
     }
     render(mapManager) {
-        //const x = this.position.x
-        //mapManager.add("*", x, 1, "yellow")
+        const [x ,y] = this.position.toArray()
+        mapManager.add("*", x, y, "yellow")
     }
 }
