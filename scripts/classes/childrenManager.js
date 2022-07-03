@@ -1,10 +1,8 @@
-import GameObject from "./objects/Object.js"
-
 export default class ChildrenManager {
     constructor(children) {
         this.children = children
     }
-    append(object = GameObject){
+    append(object){
         this.children.push(object)
     }
 }

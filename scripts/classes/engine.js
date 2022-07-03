@@ -1,6 +1,6 @@
 import MapManager from "./mapManager.js"
 import ChildrenManager from "./childrenManager.js"
-import { objects } from "./utils/objects.js"
+//import { objects } from "./utils/objects.js"
 
 export default class Engine {
     constructor(config) {
@@ -13,7 +13,7 @@ export default class Engine {
         this.mapManager = new MapManager(this.map)
         this.childrenManager = new ChildrenManager(this.children)
 
-        this.objects = objects
+        //this.objects = objects
     }
 
     init() {
@@ -69,13 +69,28 @@ export default class Engine {
         }
     }
 
+    mainLoop(delta) {
+        for(const child of this.children) {
+            child.update(delta)
+        }
+        
+    }
+
+    mapUpdate() {
+        this.map = []
+        for(const child of this.children) {
+            child.render(this.mapManager)
+        }
+    }
+
     initLoop() {
         console.log('loop rodando')
         let DrawlastUpdate = 0
 
         const Drawloop = () => {
             let delta = performance.now() - DrawlastUpdate
-
+            this.mainLoop(delta)
+            this.mapUpdate()
             this.render(delta)
             DrawlastUpdate = performance.now()
 
