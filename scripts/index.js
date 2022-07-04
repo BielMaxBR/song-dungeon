@@ -13,5 +13,5 @@ window.engine = engine
 
 const star = new starzinha(new Vector(13, 13))
 engine.childrenManager.append(star)
-console.log("aa")
+engine.mapManager.add("*", 13, 13)
 engine.init()

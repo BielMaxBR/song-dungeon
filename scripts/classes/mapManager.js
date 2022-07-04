@@ -6,6 +6,7 @@ export default class MapManager {
     add(char, x, y, color, bgcolor) {
         if (typeof (x) != "number" || typeof (y) != "number") return "error"
         this.map[[x, y]] = { char: char[0], color, bgcolor }
+        console.log("map", this.map)
     }
     addRect(char, x, y, w, h, color, bgcolor) {
         if (typeof (x) != "number" || typeof (y) != "number") return "error"

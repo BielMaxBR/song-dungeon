@@ -7,7 +7,7 @@ export default class Engine {
         this.canvas = config?.canvas || null
         this.size = config?.size || { width: 50, height: 50 }
 
-        this.map = []
+        this.map = {}
         this.children = []
 
         this.mapManager = new MapManager(this.map)
@@ -77,9 +77,11 @@ export default class Engine {
     }
 
     mapUpdate() {
-        this.map = []
+        this.map = {}
         for(const child of this.children) {
             child.render(this.mapManager)
+            this.mapManager.add("+", 13, 13)
+            console.log(this.map)
         }
     }
 
@@ -94,7 +96,7 @@ export default class Engine {
             this.render(delta)
             DrawlastUpdate = performance.now()
 
-            setTimeout(Drawloop, 1000 / 60)
+            //setTimeout(Drawloop, 1000 / 60)
         }
         DrawlastUpdate = performance.now()
 
