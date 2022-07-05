@@ -7,7 +7,7 @@ export default class Engine {
         this.canvas = config?.canvas || null
         this.size = config?.size || { width: 50, height: 50 }
 
-        this.map = {}
+        this.map = new Map()
         this.children = []
 
         this.mapManager = new MapManager(this.map)
@@ -53,7 +53,7 @@ export default class Engine {
     render() {
         for (let y = 0; y < this.size.height; y++) {
             for (let x = 0; x < this.size.width; x++) {
-                const tile = this.map[[x, y]]
+                const tile = this.map.get(`${x},${y}`)
                 const char = tile?.char || "╬"
 
                 const letter = document.getElementsByClassName(`x${x}y${y}`)[0]
@@ -77,11 +77,9 @@ export default class Engine {
     }
 
     mapUpdate() {
-        this.map = {}
+        this.map.clear()
         for(const child of this.children) {
             child.render(this.mapManager)
-            this.mapManager.add("+", 13, 13)
-            console.log(this.map)
         }
     }
 
@@ -96,7 +94,7 @@ export default class Engine {
             this.render(delta)
             DrawlastUpdate = performance.now()
 
-            //setTimeout(Drawloop, 1000 / 60)
+            setTimeout(Drawloop, 1000 / 60)
         }
         DrawlastUpdate = performance.now()
 
