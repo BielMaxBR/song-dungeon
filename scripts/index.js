@@ -13,5 +13,4 @@ window.engine = engine
 
 const star = new starzinha(new Vector(13, 13))
 engine.childrenManager.append(star)
-
 engine.init()

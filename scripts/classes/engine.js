@@ -54,7 +54,7 @@ export default class Engine {
         for (let y = 0; y < this.size.height; y++) {
             for (let x = 0; x < this.size.width; x++) {
                 const tile = this.map.get(`${x},${y}`)
-                const char = tile?.char || "╬"
+                const char = tile?.char || "."//"╬"
 
                 const letter = document.getElementsByClassName(`x${x}y${y}`)[0]
                 if (!letter) continue
@@ -63,23 +63,27 @@ export default class Engine {
                 letter.style.backgroundColor = tile?.bgcolor || "black" // `rgb(${10 * y},${10 * x},${10 * x})`
                 // char
                 letter.style.color = tile?.color || "white" // `rgb(${12 * x},${12 * y},${12 * y})`
-                letter.innerText = char
+                
+
+                if(letter.textContent != char) letter.setText(char)
             }
 
         }
     }
 
     mainLoop(delta) {
-        for(const child of this.children) {
+        for (const child of this.children) {
             child.update(delta)
         }
-        
+
     }
 
     mapUpdate() {
         this.map.clear()
-        for(const child of this.children) {
+        for (const child of this.children) {
             child.render(this.mapManager)
+            this.mapManager.addHString("PERDI", 4,4,"green","yellow")
+
         }
     }
 
@@ -93,8 +97,8 @@ export default class Engine {
             this.mapUpdate()
             this.render(delta)
             DrawlastUpdate = performance.now()
-
-            setTimeout(Drawloop, 1000 / 60)
+            console.log("loop")
+            window.requestAnimationFrame(Drawloop)
         }
         DrawlastUpdate = performance.now()
 
