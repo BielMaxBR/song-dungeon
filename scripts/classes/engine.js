@@ -1,6 +1,7 @@
 import MapManager from "./mapManager.js"
 import ChildrenManager from "./childrenManager.js"
 import { objects } from "./utils/objects.js"
+import Vector from "./utils/Vector.js"
 
 export default class Engine {
     constructor(config) {
@@ -14,6 +15,9 @@ export default class Engine {
         this.childrenManager = new ChildrenManager(this.children)
 
         this.objects = objects
+
+        this.ctx = null
+        this.offset = config?.offset || new Vector(4, -2)
     }
 
     init() {
@@ -28,48 +32,42 @@ export default class Engine {
     createCanvas() {
         let canvas = this.canvas
 
-        if (canvas != null) {
+        if (canvas == null) {
             console.log('criando canvas')
-            canvas.innerHTML = ''
 
-            for (let y = 0; y < this.size.height; y++) {
-                let line = document.createElement('li')
-                line.setAttribute("id", "line")
-
-                for (let x = 0; x < this.size.width; x++) {
-                    const letter = document.createElement('a')
-
-                    letter.setAttribute("id", "letter")
-                    letter.setAttribute("class", `x${x}y${y}`)
-                    letter.innerText = y % 2 == 0 ? "a" : "A"
-                    line.appendChild(letter)
-                }
-                canvas.appendChild(line)
-
-            }
+            canvas = document.createElement('canvas')
+            this.canvas = canvas
+            canvas.id = 'canvas'
+            document.body.appendChild(canvas)
         }
+        canvas.height = window.innerHeight
+        canvas.width = canvas.height
+        this.fontSize = Math.floor(this.canvas.height / this.size.height)
+        this.ctx = canvas.getContext("2d")
     }
 
     render() {
+        // inserir o https://github.com/fionnfuchs/ascii-canvas-js
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.fillStyle = "white"
+        this.ctx.font = `normal ${this.fontSize - 3}px monospace`
         for (let y = 0; y < this.size.height; y++) {
             for (let x = 0; x < this.size.width; x++) {
                 const tile = this.map.get(`${x},${y}`)
-                const char = tile?.char || "."//"╬"
+                const char = tile?.char || "╬"
 
-                const letter = document.getElementsByClassName(`x${x}y${y}`)[0]
-                if (!letter) continue
+                const charX = (this.fontSize / 2 * x) + this.offset.x
+                const charY = ((this.size.height + 1) * (y + 1)) + this.offset.y
 
                 // background
-                letter.style.backgroundColor = tile?.bgcolor || "black" // `rgb(${10 * y},${10 * x},${10 * x})`
+                this.ctx.fillStyle = tile?.bgcolor || "black" // `rgb(${10 * y},${10 * x},${10 * x})`
+                this.ctx.fillText("█", charX, charY)
                 // char
-                letter.style.color = tile?.color || "white" // `rgb(${12 * x},${12 * y},${12 * y})`
-                
-
-                if(letter.textContent != char) letter.setText(char)
+                this.ctx.fillStyle = tile?.color || "white" // `rgb(${12 * x},${12 * y},${12 * y})`
+                this.ctx.fillText(char, charX, charY)
             }
 
-        }
-    }
+        }    }
 
     mainLoop(delta) {
         for (const child of this.children) {
@@ -82,7 +80,7 @@ export default class Engine {
         this.map.clear()
         for (const child of this.children) {
             child.render(this.mapManager)
-            this.mapManager.addHString("PERDI", 4,4,"green","yellow")
+            this.mapManager.addHString("PERDI", 4,13,"green","yellow")
 
         }
     }
@@ -97,7 +95,7 @@ export default class Engine {
             this.mapUpdate()
             this.render(delta)
             DrawlastUpdate = performance.now()
-            console.log("loop")
+            console.log(Math.floor(delta))
             window.requestAnimationFrame(Drawloop)
         }
         DrawlastUpdate = performance.now()

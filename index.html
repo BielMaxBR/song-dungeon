@@ -16,10 +16,23 @@
         body,
         html {
             height: 100%;
+
+            display: flex;
+            justify-content: center;
             background-color: rgb(153, 153, 153);
         }
+
+        #canvas {
+            position: absolute;
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: black;
+            image-rendering: pixelated;
+            -webkit-font-smoothing: none;
+        }
         
-        @import url('https://fontlibrary.org/face/dejavu-sans-mono');
+        /* @import url('https://fontlibrary.org/face/dejavu-sans-mono');
         
         #canvas {
             list-style: none;
@@ -35,16 +48,19 @@
         }
 
         #letter {
-            color: white;
-            background-color: black;
+            color: var(--color, white);
+            background-color: var(--background, black);
         }
+        #letter:before {
+            content: var(--content, "a");
+        } */
 
     </style>
 </head>
 
 <body>
-    <!-- <canvas id="canvas"></canvas> -->
-    <ul id="canvas"></ul>
+    <canvas id="canvas"></canvas>
+    <!-- <ul id="canvas"></ul> -->
     <script src="./scripts/index.js" type="module"></script>
 </body>
 
