@@ -17,7 +17,6 @@ export default class Engine {
         this.objects = objects
 
         this.ctx = null
-        this.offset = config?.offset || new Vector(4, -2)
     }
 
     init() {
@@ -43,6 +42,7 @@ export default class Engine {
         canvas.height = window.innerHeight
         canvas.width = canvas.height
         this.fontSize = Math.floor(this.canvas.height / this.size.height)
+        console.log(this.fontSize)
         this.ctx = canvas.getContext("2d")
     }
 
@@ -54,20 +54,24 @@ export default class Engine {
         for (let y = 0; y < this.size.height; y++) {
             for (let x = 0; x < this.size.width; x++) {
                 const tile = this.map.get(`${x},${y}`)
-                const char = tile?.char || "╬"
-
-                const charX = (this.fontSize / 2 * x) + this.offset.x
-                const charY = ((this.size.height + 1) * (y + 1)) + this.offset.y
+                const char = tile?.char || "A"
+                const charX = ((this.fontSize) * 3 / 4) * (x / (2 / 3 + 0.83))
+                const charY = this.fontSize * (1 + y)
 
                 // background
-                this.ctx.fillStyle = tile?.bgcolor || "black" // `rgb(${10 * y},${10 * x},${10 * x})`
+                this.ctx.fillStyle = tile?.bgcolor || "" // `rgb(${10 * y},${10 * x},${10 * x})`
                 this.ctx.fillText("█", charX, charY)
                 // char
                 this.ctx.fillStyle = tile?.color || "white" // `rgb(${12 * x},${12 * y},${12 * y})`
+
                 this.ctx.fillText(char, charX, charY)
+
+                this.ctx.fillStyle = "yellow"
+                this.ctx.fillText("AAAAAAAAAAAAAAAAAAAAAAAAA", 0, 26)
             }
 
-        }    }
+        }
+    }
 
     mainLoop(delta) {
         for (const child of this.children) {
@@ -80,7 +84,7 @@ export default class Engine {
         this.map.clear()
         for (const child of this.children) {
             child.render(this.mapManager)
-            this.mapManager.addHString("PERDI", 4,13,"green","yellow")
+            this.mapManager.addHString("PERDI", 4, 13, "green", "yellow")
 
         }
     }
@@ -95,7 +99,6 @@ export default class Engine {
             this.mapUpdate()
             this.render(delta)
             DrawlastUpdate = performance.now()
-            console.log(Math.floor(delta))
             window.requestAnimationFrame(Drawloop)
         }
         DrawlastUpdate = performance.now()
