@@ -20,11 +20,14 @@
             },
             cursorBlink: false,
             disableSdtin: true,
-            cols: 50,
-            rows: 20
+            // cols: 50,
+            rows: 1
         });
         term.open(document.getElementById('terminal'));
-        term.write('Hello from \x1B[1;3;32mxterm.js\x1B[0m \00')
+        // term.write('Hello from \x1B[1;3;32mxterm.js\x1B[0m \00')
+        for (let i = 0; i < 50; i++) {   
+            term.write(i%5!=0?"█":"A")
+        }
         term.setOption("disableStdin", true)
     </script>
 </body>
